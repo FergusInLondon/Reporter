@@ -13,6 +13,15 @@ export default [
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
   { path: '/home', name: 'home', component: page('home.vue') },
+
+  { path: '/docs',
+    component: page('docs/index.vue'),
+    children: [
+      { path: '', redirect: { name: 'docs.listing' } },
+      { path: 'all', name: 'docs.listing', component: page('docs/listing.vue') },
+      { path: 'edit/:id', name: 'docs.edit', component: page('docs/edit.vue') }
+    ] },
+
   { path: '/settings',
     component: page('settings/index.vue'),
     children: [
@@ -21,5 +30,5 @@ export default [
       { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
     ] },
 
-  { path: '*', component: page('errors/404.vue') }
+    { path: '*', component: page('errors/404.vue') }
 ]
