@@ -19,10 +19,11 @@ if (mix.inProduction()) {
   mix.sourceMaps()
 }
 
+mix.babelConfig({
+  plugins: ["@babel/plugin-syntax-dynamic-import"]
+})
+
 mix.webpackConfig({
-  plugins: [
-    // new BundleAnalyzerPlugin()
-  ],
   resolve: {
     extensions: ['.js', '.json', '.vue'],
     alias: {
