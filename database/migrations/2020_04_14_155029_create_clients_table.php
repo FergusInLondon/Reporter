@@ -20,7 +20,7 @@ class CreateClientsTable extends Migration
             $table->string('name');
             $table->string('contact_email');
             $table->string('contact_tel');
-            $table->string('contact_preferences')
+            $table->string('contact_preferences');
 
             $table->timestamps();
             $table->softDeletes();

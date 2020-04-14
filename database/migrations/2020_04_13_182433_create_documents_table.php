@@ -16,7 +16,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
-            $table->uuid('client_id')
+            $table->uuid('client_id');
 
             $table->string('name');
             $table->text('description')->nullable();
