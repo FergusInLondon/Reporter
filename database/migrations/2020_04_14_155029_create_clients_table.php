@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentsTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
-            $table->uuid('client_id')
 
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('contact_email');
+            $table->string('contact_tel');
+            $table->string('contact_preferences')
 
             $table->timestamps();
             $table->softDeletes();
@@ -33,7 +34,6 @@ class CreateDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('clients');
     }
 }
-
