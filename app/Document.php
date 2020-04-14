@@ -7,7 +7,7 @@ class Document extends ValidationModel
         'document_uri' => 'required',
     );
 
-    protected $fillable = array('name', 'document_uri');
+    protected $fillable = array('name', 'description', 'document_uri');
 
     public function user()
     {

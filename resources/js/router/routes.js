@@ -19,7 +19,8 @@ export default [
     children: [
       { path: '', redirect: { name: 'docs.listing' } },
       { path: 'all', name: 'docs.listing', component: page('docs/listing.vue') },
-      { path: 'edit/:id', name: 'docs.edit', component: page('docs/edit.vue') }
+      { path: 'edit/:id', name: 'docs.edit', component: page('docs/edit.vue') },
+      { path: 'new', name: 'docs.create', component: page('docs/create.vue') }
     ] },
 
   { path: '/settings',

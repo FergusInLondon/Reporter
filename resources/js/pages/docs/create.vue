@@ -1,8 +1,8 @@
 
 <template>
-  <card title="Edit Document">
+  <card title="New Document">
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-      <alert-success :form="form" message="Document Updated!" />
+      <alert-success :form="form" message="Document Saved!" />
 
       <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
@@ -32,10 +32,7 @@
       <div class="form-group row">
         <div class="col-md-9 ml-md-auto">
           <v-button :loading="form.busy" type="success">
-            {{ $t('update') }}
-          </v-button>
-          <v-button :loading="form.busy" type="danger">
-            {{ $t('Delete') }}
+            {{ $t('Save') }}
           </v-button>
         </div>
       </div>
@@ -48,13 +45,6 @@
   import Form from 'vform'
 
   export default {
-    async created() {
-      const doc = await axios.get(`/api/documents/${this.$route.params.id}`)
-      if (doc.data) {
-        this.form.fill(doc.data)
-      }
-    },
-    
     data: () => ({
       form: new Form({
         name: '',
@@ -65,19 +55,8 @@
 
     methods: {
       async update() {
-        const doc = await this.form.patch(`/api/documents/${this.$route.params.id}`)
-        if (doc.data) {
-          this.form.reset()
-          this.form.fill(doc.data)
-        }
-      },
-
-      async delete() {
-        await axios.delete(`/api/documents/${this.$route.params.id}`)
-      },
-
-      async delete() {
-          console.log('deletin deletin deletin')
+        await this.form.post(`/api/documents`)
+        this.form.reset()
       }
     }
   }

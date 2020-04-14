@@ -16,7 +16,7 @@ class ValidationModel extends Model
     public function validateAndFill($data) {
         $v = Validator::make($data, $this->rules);
         if ($v->fails()) {
-            $this->errors = $v->errors;
+            $this->errors = $v->errors();
             return false;
         }
 
