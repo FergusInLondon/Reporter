@@ -1,33 +1,65 @@
 
 <template>
-    <card title="Documents">
-        <div v-if="documents">
-            <a v-for="document in documents" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ document.name }}</h5>
-                    <small class="text-muted">Status</small>
-                </div>
-                <p class="mb-1">{{ document.description }}</p>
-                <small class="text-muted">{{ document.created_at }}</small>
-            </a>
+  <card title="Edit Document">
+    <form @submit.prevent="update" @keydown="form.onKeydown($event)">
+      <alert-success :form="form" message="Document Updated!" />
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
+        <div class="col-md-7">
+          <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
+          <has-error :form="form" field="name" />
         </div>
-    </card>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">Description</label>
+        <div class="col-md-7">
+          <textarea v-model="form.description" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name"></textarea>
+          <has-error :form="form" field="description" />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group row">
+        <div class="col-md-9 ml-md-auto">
+          <v-button :loading="form.busy" type="success">
+            {{ $t('update') }}
+          </v-button>
+        </div>
+      </div>
+    </form>
+  </card>
 </template>
 
 <script>
   import axios from 'axios';
+  import Form from 'vform'
 
   export default {
     async created() {
       const doc = await axios.get(`/api/documents/${this.$route.params.id}`)
       if (doc.data) {
-        this.document = [doc.data];
+        this.form.fill(doc.data)
       }
     },
     
-    data() {
-      return {
-        doc: null
+    data: () => ({
+      form: new Form({
+        name: '',
+        description: '',
+        document_uri: ''
+      })
+    }),
+
+    methods: {
+      async update() {
+        await this.form.patch(`api/documents/`)
+        this.form.reset()
+      },
+
+      async delete() {
+          console.log('deletin deletin deletin')
       }
     }
   }
