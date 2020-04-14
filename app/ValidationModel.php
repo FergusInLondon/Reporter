@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * 
  * Based off of Dayle Rees' great post, available here:
@@ -9,8 +12,13 @@ use Illuminate\Support\Facades\Validator;
  */
 class ValidationModel extends Model
 {
-    private $errors;
+    use SoftDeletes;
 
+    use Uuid;
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    private $errors;
     protected $rules;
 
     public function validateAndFill($data) {

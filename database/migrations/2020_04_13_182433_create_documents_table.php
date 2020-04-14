@@ -14,13 +14,16 @@ class CreateDocumentsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->bigInteger('user_id')->unsigned();
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
+
 
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('document_uri')->unique();
+
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')
                 ->references('id')
