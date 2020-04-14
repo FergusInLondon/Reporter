@@ -1,31 +1,21 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto">
-      <card :title="$t('reset_password')">
-        <form @submit.prevent="send" @keydown="form.onKeydown($event)">
-          <alert-success :form="form" :message="status" />
-
-          <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email" />
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="form-group row">
-            <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form.busy">
-                {{ $t('send_password_reset_link') }}
-              </v-button>
-            </div>
-          </div>
-        </form>
-      </card>
-    </div>
-  </div>
+  <el-row :gutter="20">
+    <el-col :span="12" :offset="6">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>Reset Password</span>
+        </div>
+        <el-form ref="form" :model="form">
+        <el-form-item label="Email Address">
+          <el-input v-model="form.email"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="send">Send Password Reset</el-button>
+        </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -48,9 +38,7 @@ export default {
   methods: {
     async send () {
       const { data } = await this.form.post('/api/password/email')
-
       this.status = data.status
-
       this.form.reset()
     }
   }

@@ -1,71 +1,32 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto">
-      <card :title="$t('login')">
-        <form @submit.prevent="login" @keydown="form.onKeydown($event)">
-          <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email" />
-            </div>
-          </div>
-
-          <!-- Password -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('password') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-              <has-error :form="form" field="password" />
-            </div>
-          </div>
-
-          <!-- Remember Me -->
-          <div class="form-group row">
-            <div class="col-md-3" />
-            <div class="col-md-7 d-flex">
-              <checkbox v-model="remember" name="remember">
-                {{ $t('remember_me') }}
-              </checkbox>
-
-              <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
-                {{ $t('forgot_password') }}
-              </router-link>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <div class="col-md-7 offset-md-3 d-flex">
-              <!-- Submit Button -->
-              <v-button :loading="form.busy">
-                {{ $t('login') }}
-              </v-button>
-
-              <!-- GitHub Login Button -->
-              <login-with-github />
-            </div>
-          </div>
-        </form>
-      </card>
-    </div>
-  </div>
+  <el-row :gutter="20">
+    <el-col :span="12" :offset="6">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span>Login</span>
+          <el-link style="float: right; padding: 3px 0" type="primary" @click="reset">Reset Password</el-link>
+        </div>
+        <el-form ref="form" :model="form">
+        <el-form-item label="Email Address">
+          <el-input v-model="form.email"></el-input>
+        </el-form-item>
+        <el-form-item label="Password">
+          <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="login">Login</el-button>
+        </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
 import Form from 'vform'
-import LoginWithGithub from '~/components/LoginWithGithub'
 
 export default {
   middleware: 'guest',
-
-  components: {
-    LoginWithGithub
-  },
-
-  metaInfo () {
-    return { title: this.$t('login') }
-  },
 
   data: () => ({
     form: new Form({
@@ -76,21 +37,19 @@ export default {
   }),
 
   methods: {
-    async login () {
-      // Submit the form.
+    async login() {
       const { data } = await this.form.post('/api/login')
 
-      // Save the token.
       this.$store.dispatch('auth/saveToken', {
         token: data.token,
         remember: this.remember
       })
 
-      // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
-
-      // Redirect home.
       this.$router.push({ name: 'home' })
+    },
+    reset() {
+      this.$router.push({name: 'password.request'})
     }
   }
 }
