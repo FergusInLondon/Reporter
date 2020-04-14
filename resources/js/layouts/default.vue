@@ -1,10 +1,12 @@
 <template>
   <el-container>
     <navbar />
-    <sidebar />
-    <el-main>
-      <child />
-    </el-main>
+    <el-container>
+      <sidebar />
+      <el-main>
+        <child />
+      </el-main>
+    </el-container>
     <el-footer></el-footer>
   </el-container>
 </template>

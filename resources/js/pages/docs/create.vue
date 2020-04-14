@@ -56,6 +56,7 @@
     methods: {
       async update() {
         await this.form.post(`/api/documents`)
+        this.$router.push({name: 'docs.listing'})
         this.form.reset()
       }
     }

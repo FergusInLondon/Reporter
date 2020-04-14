@@ -1,29 +1,26 @@
 <template>
-  <div class="row">
-    <div class="col-md-3">
-      <card title="Documents" class="settings-card">
-        <ul class="nav flex-column nav-pills">
-          <li v-for="tab in tabs" :key="tab.route" class="nav-item">
-            <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
-              <fa :icon="tab.icon" fixed-width />
-              {{ tab.name }}
-            </router-link>
-          </li>
-        </ul>
-      </card>
+  <el-card class="box-card">
+    <div slot="header" class="clearfix">
+      <span class="module-box-holder">Documents</span>
+      <el-button @click="goCreate" style="float: right;" type="primary" icon="el-icon-edit"></el-button>
     </div>
-
-    <div class="col-md-9">
-      <transition name="fade" mode="out-in">
-        <router-view />
-      </transition>
-    </div>
-  </div>
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
+  </el-card>
 </template>
+
+
 
 <script>
 export default {
   middleware: 'auth',
+
+  methods: {
+    goCreate() {
+      this.$router.push({name: 'docs.create'})
+    }
+  },
 
   computed: {
     tabs () {
@@ -40,7 +37,8 @@ export default {
 </script>
 
 <style>
-.settings-card .card-body {
-  padding: 0;
+.module-box-holder {
+  line-height: 2em;
+  font-size: 1.3em;
 }
 </style>

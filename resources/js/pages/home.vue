@@ -1,7 +1,7 @@
 <template>
-  <card :title="$t('home')">
+  <el-card class="box-card">
     {{ $t('you_are_logged_in') }}
-  </card>
+  </el-card>
 </template>
 
 <script>
