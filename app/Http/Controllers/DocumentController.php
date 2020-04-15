@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Document\Document;
+use App\Entities\Document\RepositoryInterface as DocumentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Http\Response;
+use App\Exceptions\UnauthorisedAccessException;
 
 class DocumentController extends Controller
 {
     private $documentRepository;
 
-    public __construct(DocumentRepositoryInterface $docRepo) {
+    public function __construct(DocumentRepository $docRepo) {
         $this->documentRepository = $docRepo;
     }
 
     private function checkUserOwnsDocument(Request $request, Document $document) {
-        return $request->user()->id == $document->user_id;
+        if ($request->user()->id == $document->user_id) {
+            throw new UnauthorisedAccessException();
+        }
     }
 
     /**
@@ -26,7 +29,7 @@ class DocumentController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->documentRepository->getAllForUser($request->user);
+        return $this->documentRepository->getAllForUser($request->user());
     }
 
     /**
@@ -55,10 +58,7 @@ class DocumentController extends Controller
      */
     public function show(Request $req, Document $document)
     {
-        if (!$this->checkUserOwnsDocument($req, $document)) {
-            return response()->noContent(Response::HTTP_UNAUTHORIZED);
-        }
-
+        $this->checkUserOwnsDocument($req, $document)
         return $document;
     }
 
@@ -71,10 +71,7 @@ class DocumentController extends Controller
      */
     public function update(Request $req, Document $document)
     {
-        if (!$this->checkUserOwnsDocument($req, $document)) {
-            return response()->noContent(Response::HTTP_UNAUTHORIZED);
-        }
-
+        $this->checkUserOwnsDocument($req, $document)
         if (!$document->validateAndFill($req->all())) {
             return $model->errors();
         }
@@ -91,10 +88,7 @@ class DocumentController extends Controller
      */
     public function destroy(Request $req, Document $document)
     {
-        if (!$this->checkUserOwnsDocument($req, $document)) {
-            return response()->noContent(Response::HTTP_UNAUTHORIZED);
-        }
-
+        $this->checkUserOwnsDocument($req, $document);
         return $document->delete();
     }
 }

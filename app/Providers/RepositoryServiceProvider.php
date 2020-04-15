@@ -14,19 +14,19 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(\App\Entities\Client\RepositoryInterface::class,
-            \App\Entities\Client\Repository::class);
+            \App\Entities\Client\EloquentRepository::class);
         
         $this->app->bind(\App\Entities\Document\RepositoryInterface::class,
-            \App\Entities\Document\Repository::class)
+            \App\Entities\Document\EloquentRepository::class);
 
         $this->app->bind(\App\Entities\File\RepositoryInterface::class,
-            \App\Entities\File\Repository::class)
+            \App\Entities\File\EloquentRepository::class);
 
         $this->app->bind(\App\Entities\Payment\RepositoryInterface::class,
-            \App\Entities\Payment\Repository::class)
+            \App\Entities\Payment\EloquentRepository::class);
 
         $this->app->bind(\App\Entities\User\RepositoryInterface::class,
-            \App\Entities\User\Repository::class)
+            \App\Entities\User\EloquentRepository::class);
     }
 
     /**

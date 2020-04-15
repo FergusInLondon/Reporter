@@ -4,8 +4,8 @@ use App\Entities\User\User;
 use App\Entities\Client\Client;
 
 interface RepositoryInterface {
-    public get(string $id);
-    public getAllForUser(User $user);
-    public getAllForPaymentStatus(string $status);
-    public getAllForClient(Client $client);
+    public function get(string $id);
+    public function getAllForUser(User $user);
+    public function getAllForPaymentStatus(string $status);
+    public function getAllForClient(Client $client);
 }

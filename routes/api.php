@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
     Route::apiResource('documents', 'DocumentController');
+    Route::apiResource('payments', 'PaymentController');
+    Route::apiResource('clients', 'ClientController');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
