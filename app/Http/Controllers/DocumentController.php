@@ -9,6 +9,12 @@ use Illuminate\Http\Response;
 
 class DocumentController extends Controller
 {
+    private $documentRepository;
+
+    public __construct(DocumentRepositoryInterface $docRepo) {
+        $this->documentRepository = $docRepo;
+    }
+
     private function checkUserOwnsDocument(Request $request, Document $document) {
         return $request->user()->id == $document->user_id;
     }
@@ -20,7 +26,7 @@ class DocumentController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->documents;
+        return $this->documentRepository->getAllForUser($request->user);
     }
 
     /**
