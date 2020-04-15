@@ -4,10 +4,9 @@ class Document extends \App\Entities\ValidationModel
 {
     protected $rules = array(
         'name' => 'required',
-        'document_uri' => 'required',
     );
 
-    protected $fillable = array('name', 'description', 'document_uri');
+    protected $fillable = array('name', 'description');
 
     public function user()
     {
