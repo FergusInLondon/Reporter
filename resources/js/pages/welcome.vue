@@ -2,17 +2,11 @@
   <div>
     <div class="top-right links">
       <template v-if="authenticated">
-        <router-link :to="{ name: 'home' }">
-          {{ $t('home') }}
-        </router-link>
+        <router-link :to="{ name: 'home' }">Home</router-link>
       </template>
       <template v-else>
-        <router-link :to="{ name: 'login' }">
-          {{ $t('login') }}
-        </router-link>
-        <router-link :to="{ name: 'register' }">
-          {{ $t('register') }}
-        </router-link>
+        <router-link :to="{ name: 'login' }">Login</router-link>
+        <router-link :to="{ name: 'register' }">Register</router-link>
       </template>
     </div>
 
@@ -33,10 +27,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   layout: 'basic',
-
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
 
   data: () => ({
     title: window.config.appName

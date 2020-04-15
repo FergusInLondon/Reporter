@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    {{ $t('you_are_logged_in') }}
+    You are logged in!
   </el-card>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   middleware: 'auth',
 
   metaInfo () {
-    return { title: this.$t('home') }
+    return { title: "Home" }
   }
 }
 </script>

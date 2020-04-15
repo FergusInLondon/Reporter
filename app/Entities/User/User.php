@@ -1,6 +1,4 @@
-<?php
-
-namespace App;
+<?php namespace App\Entities\User;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
@@ -115,6 +113,6 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 
     public function documents()
     {
-        return $this->hasMany('App\Document');
+        return $this->hasMany('App\Entities\Document\Document');
     }
 }

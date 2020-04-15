@@ -9,7 +9,7 @@ Vue.use(Meta)
 Vue.use(Router)
 
 // The middleware for every page of the application.
-const globalMiddleware = ['locale', 'check-auth']
+const globalMiddleware = ['check-auth']
 
 // Load middleware modules dynamically.
 const routeMiddleware = resolveMiddleware(
@@ -67,9 +67,11 @@ async function beforeEach (to, from, next) {
   }
 
   // Start the loading bar.
+  /* ! @todo - this is where we hook in to the loading status.
   if (components[components.length - 1].loading !== false) {
     router.app.$nextTick(() => router.app.$loading.start())
   }
+  */
 
   // Get the middleware for all the matched components.
   const middleware = getMiddleware(components)
@@ -95,7 +97,9 @@ async function beforeEach (to, from, next) {
 async function afterEach (to, from, next) {
   await router.app.$nextTick()
 
+  /* ! @todo this is where we hook in to the loading status
   router.app.$loading.finish()
+  */
 }
 
 /**

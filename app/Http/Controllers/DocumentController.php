@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
+use App\Entities\Document\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Response;
