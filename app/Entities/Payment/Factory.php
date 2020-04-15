@@ -3,7 +3,7 @@
 use Faker\Generator as Faker;
 
 class Factory {
-    public static generate(Faker $faker) {
+    public function __invoke(Faker $faker) {
         return []
     }
 }
