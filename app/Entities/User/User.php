@@ -65,16 +65,6 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     }
 
     /**
-     * Get the oauth providers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function oauthProviders()
-    {
-        return $this->hasMany(OAuthProvider::class);
-    }
-
-    /**
      * Send the password reset notification.
      *
      * @param  string  $token
@@ -114,5 +104,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function documents()
     {
         return $this->hasMany('App\Entities\Document\Document');
+    }
+
+    public function clients()
+    {
+        return $this->hasMany('App\Entities\Client\Client');
     }
 }

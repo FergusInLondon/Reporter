@@ -19,13 +19,15 @@ class ValidationModel extends Model
     public $incrementing = false;
 
     private $errors;
-    protected $rules;
+    protected $rules = array();
 
     public function validateAndFill($data) {
-        $v = Validator::make($data, $this->rules);
-        if ($v->fails()) {
-            $this->errors = $v->errors();
-            return false;
+        if (!empty($this->rules)) {
+            $v = Validator::make($data, $this->rules);
+            if ($v->fails()) {
+                $this->errors = $v->errors();
+                return false;
+            }    
         }
 
         $this->fill($data);

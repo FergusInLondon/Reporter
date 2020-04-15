@@ -13,4 +13,19 @@ class Document extends \App\Entities\ValidationModel
     {
         return $this->belongsTo('App\Entities\User\User');
     }
+
+    public function client()
+    {
+        return $this->belongsTo('App\Entities\Client\Client');
+    }
+
+    public function file()
+    {
+        return $this->hasOne('App\Entities\File\File');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne('App\Entities\Payment\Payment');
+    }
 }
