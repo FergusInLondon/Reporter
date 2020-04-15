@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 
 // Request interceptor
 axios.interceptors.request.use(request => {
-  const token = store.getters['auth/token']
+  const token = store.getters['app/token']
   if (token) {
     request.headers.common['Authorization'] = `Bearer ${token}`
   }
@@ -25,21 +25,21 @@ axios.interceptors.response.use(response => response, error => {
       title: "Unable to make request",
       text: "It looks like something has gone wrong our side..",
       reverseButtons: true,
-      confirmButtonText: i18n.t('ok'),
-      cancelButtonText: i18n.t('cancel')
+      confirmButtonText: "ok",
+      cancelButtonText: "cancel"
     })
   }
 
-  if (status === 401 && store.getters['auth/check']) {
+  if (status === 401 && store.getters['app/check']) {
     Swal.fire({
       type: 'warning',
       title: "Your session has expired.",
       text: "You need to re-authenticate",
       reverseButtons: true,
-      confirmButtonText: i18n.t('ok'),
-      cancelButtonText: i18n.t('cancel')
+      confirmButtonText: "ok",
+      cancelButtonText: "cancel"
     }).then(() => {
-      store.commit('auth/LOGOUT')
+      store.commit('app/LOGOUT')
 
       router.push({ name: 'login' })
     })

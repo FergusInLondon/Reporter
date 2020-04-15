@@ -40,12 +40,12 @@ export default {
     async login() {
       const { data } = await this.form.post('/api/login')
 
-      this.$store.dispatch('auth/saveToken', {
+      this.$store.dispatch('app/saveToken', {
         token: data.token,
         remember: this.remember
       })
 
-      await this.$store.dispatch('auth/fetchUser')
+      await this.$store.dispatch('app/fetchUser')
       this.$router.push({ name: 'home' })
     },
     reset() {

@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    You are logged in!
+    You're now logged in; this space will be an area for statistics and metrics.
   </el-card>
 </template>
 

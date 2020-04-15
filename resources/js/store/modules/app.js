@@ -5,14 +5,18 @@ import * as types from '../mutation-types'
 // state
 export const state = {
   user: null,
-  token: Cookies.get('token')
+  token: Cookies.get('token'),
+  isLoading: false,
+  showSidebar: true
 }
 
 // getters
 export const getters = {
   user: state => state.user,
   token: state => state.token,
-  check: state => state.user !== null
+  check: state => state.user !== null,
+  isLoading: state => state.isLoading,
+  sidebarCollapsed: state => !state.showSidebar
 }
 
 // mutations
@@ -40,6 +44,22 @@ export const mutations = {
 
   [types.UPDATE_USER] (state, { user }) {
     state.user = user
+  },
+
+  [types.IS_LOADING] (state) {
+    state.isLoading = true
+  },
+
+  [types.FINISHED_LOADING] (state) {
+    state.isLoading = false
+  },
+
+  [types.SIDEBAR_COLLAPSED] (state) {
+    state.showSidebar = false
+  },
+
+  [types.SIDEBAR_VISIBLE] (state) {
+    state.showSidebar = true
   }
 }
 
@@ -71,9 +91,11 @@ export const actions = {
     commit(types.LOGOUT)
   },
 
-  async fetchOauthUrl (ctx, { provider }) {
-    const { data } = await axios.post(`/api/oauth/${provider}`)
+  setLoading({ commit }, payload) {
+    commit(payload ? types.IS_LOADING : types.FINISHED_LOADING)
+  },
 
-    return data.url
+  showSidebar({ commit }, payload) {
+    commit(payload ? types.SIDEBAR_VISIBLE : types.SIDEBAR_COLLAPSED)
   }
 }

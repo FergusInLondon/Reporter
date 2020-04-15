@@ -39,7 +39,8 @@ export default {
   },
 
   mounted () {
-    this.$loading = this.$refs.loading
+    // ! @todo hook in to loading.
+    //this.$loading = this.$refs.loading
   },
 
   methods: {
@@ -58,3 +59,13 @@ export default {
   }
 }
 </script>
+
+<style>
+#app {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+</style>

@@ -33,7 +33,7 @@ export default {
   }),
 
   computed: mapGetters({
-    authenticated: 'auth/check'
+    authenticated: 'app/check'
   })
 }
 </script>

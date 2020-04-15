@@ -5,7 +5,7 @@
   active-text-color="#ffd04b"  :router="true">
       <template v-if="user">
         <el-menu-item id="toggleSidenav" @click="toggleSideNav">
-          <i :class="[ navOpened ? 'el-icon-turn-off' : 'el-icon-open' ]"></i>
+          <i id="sidebar-toggle" :class="[ sidebarCollapsed ? 'el-icon-open' : 'el-icon-turn-off']"></i>
         </el-menu-item>
         <el-menu-item @click="logout">Logout</el-menu-item>
       </template>
@@ -22,19 +22,16 @@
 
   export default {
     computed: mapGetters({
-      user: 'auth/user'
-    }),
-    data: () => ({
-      navOpened: false
+      user: 'app/user',
+      sidebarCollapsed: 'app/sidebarCollapsed'
     }),
     methods: {
       async logout() {
-        await this.$store.dispatch('auth/logout');
+        await this.$store.dispatch('app/logout');
         this.$router.push({ name: 'login' });
       },
       toggleSideNav() {
-        // ! @todo - really belongs in the vuex store, so sidenav can access it.
-        this.navOpened = !this.navOpened
+        this.$store.dispatch('app/showSidebar', this.sidebarCollapsed)
       }
     }
   }
@@ -45,10 +42,8 @@
   float:left !important;
 }
 #toggleSidenav > i {
+  color: white;
   font-size: 2em;
-}
-#nav-header {
-  padding: 0;
 }
 .el-menu-logout li {
   float: right !important;

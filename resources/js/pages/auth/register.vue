@@ -56,10 +56,10 @@ export default {
         const { data: { token } } = await this.form.post('/api/login')
 
         // Save the token.
-        this.$store.dispatch('auth/saveToken', { token })
+        this.$store.dispatch('app/saveToken', { token })
 
         // Update the user.
-        await this.$store.dispatch('auth/updateUser', { user: data })
+        await this.$store.dispatch('app/updateUser', { user: data })
 
         // Redirect home.
         this.$router.push({ name: 'home' })

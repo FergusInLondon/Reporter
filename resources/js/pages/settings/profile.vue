@@ -1,5 +1,5 @@
 <template>
-  <card :title="$t('your_info')">
+  <card title="your_info">
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Info updated" />
 
@@ -52,7 +52,7 @@ export default {
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
+    user: 'app/user'
   }),
 
   created () {
@@ -66,7 +66,7 @@ export default {
     async update () {
       const { data } = await this.form.patch('/api/settings/profile')
 
-      this.$store.dispatch('auth/updateUser', { user: data })
+      this.$store.dispatch('app/updateUser', { user: data })
     }
   }
 }

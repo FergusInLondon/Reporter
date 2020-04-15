@@ -1,6 +1,5 @@
 
 <template>
-  <card title="New Document">
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Document Saved!" />
 
@@ -22,13 +21,10 @@
       <!-- Submit Button -->
       <div class="form-group row">
         <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">
-            Save
-          </v-button>
+        <el-button type="primary" @click="update">Create</el-button>
         </div>
       </div>
     </form>
-  </card>
 </template>
 
 <script>
