@@ -4,6 +4,9 @@ use Faker\Generator as Faker;
 
 class Factory {
     public function __invoke(Faker $faker) {
-        return []
+        return [
+            'name' => $faker->sentence(),
+            'description' => $faker->paragraph()
+        ];
     }
 }

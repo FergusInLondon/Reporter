@@ -1,4 +1,3 @@
-
 <?php namespace App\Entities\Payment;
 
 class Payment extends \App\Entities\ValidationModel
@@ -9,7 +8,7 @@ class Payment extends \App\Entities\ValidationModel
 
     protected $fillable = array(
         'amount'
-    )
+    );
 
     public function document()
     {

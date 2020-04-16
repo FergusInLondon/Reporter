@@ -1,6 +1,6 @@
 <template>
     <el-aside v-if="user">
-        <el-menu id="top-sidebar" class="el-menu-vertical-demo" :collapse="isCollapsed" :router="true">
+        <el-menu id="top-sidebar" :collapse="isCollapsed" :router="true">
           <el-menu-item v-for="(page, idx) in pages" :key="page.route" :index="idx" :route="{ name: page.route }">
             <i :class="page.icon"></i>
             <span slot="title">{{ page.name }}</span>
@@ -15,7 +15,6 @@
   export default {
     data() {
       return {
-        sidebarCollapsed: true,
         pages: [
           {
             icon: 'el-icon-s-home',
@@ -23,13 +22,8 @@
             name: 'Home'
           },
           {
-            icon: 'el-icon-user',
-            route: 'settings.profile',
-            name: 'Users'
-          },
-          {
             icon: 'el-icon-office-building',
-            route: 'settings.profile',
+            route: 'clients.listing',
             name: 'Clients'
           },
           {
@@ -39,8 +33,13 @@
           },
           {
             icon: 'el-icon-money',
-            route: 'docs.create',
+            route: 'payments.listing',
             name: 'Payments'
+          },
+          {
+            icon: 'el-icon-setting',
+            route: 'settings.profile',
+            name: 'Settings'
           }
         ]
       };

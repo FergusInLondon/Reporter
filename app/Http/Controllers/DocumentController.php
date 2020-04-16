@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Entities\Document\Document;
 use App\Entities\Document\RepositoryInterface as DocumentRepository;
@@ -58,7 +56,7 @@ class DocumentController extends Controller
      */
     public function show(Request $req, Document $document)
     {
-        $this->checkUserOwnsDocument($req, $document)
+        $this->checkUserOwnsDocument($req, $document);
         return $document;
     }
 
@@ -71,7 +69,7 @@ class DocumentController extends Controller
      */
     public function update(Request $req, Document $document)
     {
-        $this->checkUserOwnsDocument($req, $document)
+        $this->checkUserOwnsDocument($req, $document);
         if (!$document->validateAndFill($req->all())) {
             return $model->errors();
         }

@@ -1,20 +1,24 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
-
+use App\Entities\Client\RepositoryInterface as ClientRepository;
 use App\Client;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    private $clientRepository;
+
+    public function __construct(ClientRepository $clientRepo) {
+        $this->clientRepository = $clientRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request) {
+        return $this->clientRepository->getAllForUser($request->user());
     }
 
     /**

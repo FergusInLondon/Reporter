@@ -1,4 +1,3 @@
-
 <?php namespace App\Entities\File;
 
 class File extends \App\Entities\ValidationModel

@@ -3,7 +3,6 @@
 use App\Entities\User\User;
 use App\Entities\Client\Client;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Exceptions\UnauthorisedAccessException;
 
 class EloquentRepository implements RepositoryInterface {
@@ -23,7 +22,7 @@ class EloquentRepository implements RepositoryInterface {
             throw new UnauthorisedAccessException();
         }
 
-        return $user->documents();
+        return $user->documents()->getResults();
     }
 
     public function getAllForPaymentStatus(string $status) {
@@ -36,7 +35,7 @@ class EloquentRepository implements RepositoryInterface {
     public function getAllForClient(Client $client) {
         return Document::where('user_id', $this->currentUser->id)
             ->whereHas('client', function(Builder $query) use ($client) {
-                $query->where('client_id', $client->id)
+                $query->where('client_id', $client->id);
             })->get();
     }
 }

@@ -1,13 +1,19 @@
 <?php namespace App\Http\Controllers;
 
 use App\Entities\Payment\Payment;
+use App\Entities\Payment\RepositoryInterface as PaymentRepository;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function index()
-    {
-        //
+    private $paymentRepository;
+
+    public function __construct(PaymentRepository $paymentRepo) {
+        $this->paymentRepository = $paymentRepo;
+    }
+
+    public function index(Request $request) {
+        return $this->paymentRepository->getAllForUser($request->user());
     }
 
     /**

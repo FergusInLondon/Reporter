@@ -1,4 +1,3 @@
-
 <?php namespace App\Entities\Client;
 
 class Client extends \App\Entities\ValidationModel
@@ -9,7 +8,7 @@ class Client extends \App\Entities\ValidationModel
 
     protected $fillable = array(
         'name', 'contact_email', 'contact_tel', 'contact_preferences'
-    )
+    );
 
     public function user()
     {

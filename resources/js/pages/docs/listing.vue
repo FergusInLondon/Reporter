@@ -5,7 +5,8 @@
         <timeago :datetime="colProps.row.created_at"></timeago>
       </template>
     </el-table-column>
-    <el-table-column prop="name" label="Name" ></el-table-column>
+    <el-table-column prop="name" label="Name"></el-table-column>
+    <el-table-column prop="" label="Client"></el-table-column>
     <el-table-column prop="status" label="Status" ></el-table-column>
     <el-table-column
       fixed="right"

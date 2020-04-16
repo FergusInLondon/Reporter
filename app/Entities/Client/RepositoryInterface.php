@@ -4,7 +4,7 @@ use App\Entities\User\User;
 use App\Entities\Document\Document;
 
 interface RepositoryInterface {
-    public get(string $id);
-    public getAllForUser(User $user);
-    public getForDocument(Document $doc);
+    public function get(string $id);
+    public function getAllForUser(User $user);
+    public function getForDocument(Document $doc);
 }

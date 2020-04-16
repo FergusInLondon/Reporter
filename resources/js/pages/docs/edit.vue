@@ -66,10 +66,6 @@
 
       async delete() {
         await axios.delete(`/api/documents/${this.$route.params.id}`)
-      },
-
-      async delete() {
-          console.log('deletin deletin deletin')
       }
     }
   }
