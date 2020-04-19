@@ -1,12 +1,16 @@
 <template>
-  <el-card class="box-card">
+  <span>
     You're now logged in; this space will be an area for statistics and metrics.
-  </el-card>
+  </span>
 </template>
 
 <script>
 export default {
   middleware: 'auth',
+
+  created() {
+    this.$store.dispatch('app/updateTitle', 'Welcome')
+  },
 
   metaInfo () {
     return { title: "Home" }

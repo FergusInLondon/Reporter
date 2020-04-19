@@ -23,22 +23,22 @@
           },
           {
             icon: 'el-icon-office-building',
-            route: 'clients.listing',
+            route: 'clients.index',
             name: 'Clients'
           },
           {
             icon: 'el-icon-document-copy',
-            route: 'docs.listing',
+            route: 'docs.index',
             name: 'Documents'
           },
           {
             icon: 'el-icon-money',
-            route: 'payments.listing',
+            route: 'payments.index',
             name: 'Payments'
           },
           {
             icon: 'el-icon-setting',
-            route: 'settings.profile',
+            route: 'settings.account',
             name: 'Settings'
           }
         ]

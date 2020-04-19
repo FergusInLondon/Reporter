@@ -2,6 +2,7 @@
 
 use App\Entities\Document\Document;
 use App\Entities\Document\RepositoryInterface as DocumentRepository;
+use App\Entities\Document\SearchQuery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Exceptions\UnauthorisedAccessException;
@@ -14,12 +15,6 @@ class DocumentController extends Controller
         $this->documentRepository = $docRepo;
     }
 
-    private function checkUserOwnsDocument(Request $request, Document $document) {
-        if ($request->user()->id == $document->user_id) {
-            throw new UnauthorisedAccessException();
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +22,7 @@ class DocumentController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->documentRepository->getAllForUser($request->user());
+        return $this->documentRepository->getAllForCurrentUser(new SearchQuery($request));
     }
 
     /**
@@ -56,7 +51,6 @@ class DocumentController extends Controller
      */
     public function show(Request $req, Document $document)
     {
-        $this->checkUserOwnsDocument($req, $document);
         return $document;
     }
 
@@ -69,11 +63,6 @@ class DocumentController extends Controller
      */
     public function update(Request $req, Document $document)
     {
-        $this->checkUserOwnsDocument($req, $document);
-        if (!$document->validateAndFill($req->all())) {
-            return $model->errors();
-        }
-
         $document->save();
         return $document;
     }
@@ -86,7 +75,6 @@ class DocumentController extends Controller
      */
     public function destroy(Request $req, Document $document)
     {
-        $this->checkUserOwnsDocument($req, $document);
         return $document->delete();
     }
 }

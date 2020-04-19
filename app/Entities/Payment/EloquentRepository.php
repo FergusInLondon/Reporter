@@ -1,6 +1,7 @@
 <?php namespace App\Entities\Payment;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use App\Entities\Document\Document;
 use App\Entities\Client\Client;
@@ -15,21 +16,23 @@ class EloquentRepository implements RepositoryInterface {
         $this->currentUser = Auth::user();
     }
 
-    public function getAllForUser(User $user) {
-        $userId = $this->currentUser->id;
+    private function baseQuery() {
+        return DB::table('payments')
+            ->leftJoin('documents', 'payments.document_id', '=', 'documents.id')
+            ->leftJoin('clients', 'documents.client_id', '=', 'clients.id')
+            ->select(
+                'payments.id', 'payments.status', 'payments.created_at', 'payments.updated_at',
+                'payments.amount', 'payments.document_id', 'documents.client_id',
+                'documents.name AS document_name', 'clients.name as client_name'
+            )->where('documents.user_id', '=', $this->currentUser->id);
+    }
 
-        return Payment::whereHas('document', function(Builder $query) use ($userId) {
-            $query->where('user_id', $userId);
-        })->get();
+    public function getForCurrentUser(SearchQuery $query) {
+        return $this->baseQuery()->get();
     }
 
     public function get(string $id) {
-        $payment = Payment::findOrFail($id);
-        if ($payment->user_id != $this->currentUser->id) {
-            throw new UnauthorisedAccessException();
-        }
-
-        return $payment;
+        return $this->baseQuery()->where('payments.id', '=', $id)->first();
     }
 
     public function getForDocument(Document $doc) {

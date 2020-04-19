@@ -2,8 +2,8 @@
 
 use App\Entities\User\User;
 use App\Entities\Client\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Exceptions\UnauthorisedAccessException;
 
 class EloquentRepository implements RepositoryInterface {
 
@@ -13,29 +13,31 @@ class EloquentRepository implements RepositoryInterface {
         $this->currentUser = Auth::user();
     }
 
-    public function get(string $id) {
-        return $this->currenUser->documents()->findOrFail($id);
+    public function baseQuery() {
+        return DB::table('documents')
+            ->leftJoin('clients', 'documents.client_id', '=', 'clients.id')
+            ->leftJoin('payments', 'payments.document_id', '=', 'documents.id')
+            ->select(
+                'documents.*', 'payments.status', 'clients.name as client_name'
+            )->where('documents.user_id', '=', $this->currentUser->id);
     }
 
-    public function getAllForUser(User $user) {
-        if ($user->id != $this->currentUser->id) {
-            throw new UnauthorisedAccessException();
-        }
+    public function get(string $id) {
+        return $this->baseQuery()->where('documents.id', '=', $id)->first();
+    }
 
-        return $user->documents()->getResults();
+    public function getAllForCurrentUser(Callable $filters) {
+        $query = $this->baseQuery();
+        $filters($query);
+
+        return $query->get();
     }
 
     public function getAllForPaymentStatus(string $status) {
-        return Document::where('user_id', $this->currentUser->id)
-            ->whereHas('payment', function(Builder $query) use ($status) {
-                $query->where('status', $status);
-            })->get();
+        return $this->baseQuery->where('payments.status', '=', $status)->get();
     }
 
-    public function getAllForClient(Client $client) {
-        return Document::where('user_id', $this->currentUser->id)
-            ->whereHas('client', function(Builder $query) use ($client) {
-                $query->where('client_id', $client->id);
-            })->get();
+    public function getAllForClient(Client $clientId) {
+        return $this->basequery()->where('users.id', '=', $id)->get();
     }
 }

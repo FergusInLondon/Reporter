@@ -6,6 +6,8 @@
           <span>Login</span>
           <el-link style="float: right; padding: 3px 0" type="primary" @click="reset">Reset Password</el-link>
         </div>
+        <el-alert v-if="!canSubmit" title="Please enter a valid username and password." type="info" :closable="false" show-icon></el-alert>
+        <el-alert v-if="loginFailed" title="Incorrect login credentials!" type="error" show-icon :closable="false"></el-alert>
         <el-form ref="form" :model="form">
         <el-form-item label="Email Address">
           <el-input v-model="form.email"></el-input>
@@ -33,15 +35,28 @@ export default {
       email: '',
       password: ''
     }),
-    remember: false
+    remember: false,
+    loginFailed: false
   }),
+
+  computed: {
+    canSubmit() {
+      return this.form.email.length > 0 && this.form.password.length > 0
+    }
+  },
 
   methods: {
     async login() {
-      const { data } = await this.form.post('/api/login')
+      let response
+      try {
+        response = await this.form.post('/api/login')
+      } catch(e) {
+        this.loginFailed = true
+        return
+      }
 
       this.$store.dispatch('app/saveToken', {
-        token: data.token,
+        token: response.data.token,
         remember: this.remember
       })
 

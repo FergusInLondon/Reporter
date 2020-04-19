@@ -7,7 +7,8 @@ export const state = {
   user: null,
   token: Cookies.get('token'),
   isLoading: false,
-  showSidebar: true
+  showSidebar: true,
+  pageTitle: 'Welcome'
 }
 
 // getters
@@ -16,7 +17,8 @@ export const getters = {
   token: state => state.token,
   check: state => state.user !== null,
   isLoading: state => state.isLoading,
-  sidebarCollapsed: state => !state.showSidebar
+  sidebarCollapsed: state => !state.showSidebar,
+  pageTitle: state => state.pageTitle
 }
 
 // mutations
@@ -60,12 +62,16 @@ export const mutations = {
 
   [types.SIDEBAR_VISIBLE] (state) {
     state.showSidebar = true
+  },
+
+  [types.UPDATE_TITLE] (state, title) {
+    state.pageTitle = title
   }
 }
 
 // actions
 export const actions = {
-  saveToken ({ commit, dispatch }, payload) {
+  saveToken ({ commit }, payload) {
     commit(types.SAVE_TOKEN, payload)
   },
 
@@ -97,5 +103,9 @@ export const actions = {
 
   showSidebar({ commit }, payload) {
     commit(payload ? types.SIDEBAR_VISIBLE : types.SIDEBAR_COLLAPSED)
+  },
+
+  updateTitle({ commit }, payload) {
+    commit(types.UPDATE_TITLE, payload)
   }
 }

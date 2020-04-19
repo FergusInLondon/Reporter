@@ -4,7 +4,15 @@
     <el-container id="inner-container">
       <sidebar id="sidebar" />
       <el-main v-loading="loading">
-        <child />
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span class="module-box-holder">{{ title }}</span>
+              <el-button id="btn-back" @click="goBack" type="primary">Back</el-button>
+            </div>
+            <transition name="fade" mode="out-in">
+              <router-view />
+            </transition>
+          </el-card>
       </el-main>
     </el-container>
     <el-footer id="footer"></el-footer>
@@ -22,12 +30,21 @@ export default {
     Navbar, Sidebar
   },
   computed: mapGetters({
-    loading: 'app/isLoading'
-  })
+    loading: 'app/isLoading',
+    title: 'app/pageTitle'
+  }),
+  methods: {
+    goBack () {
+      this.$router.go(-1);
+    }
+  }
 }
 </script>
 
 <style>
+#btn-back {
+  float: right;
+}
 #top-container {
   min-height: 100%;
 }
@@ -44,5 +61,9 @@ export default {
 }
 #footer {
   flex: 0;
+}
+.module-box-holder {
+  line-height: 2em;
+  font-size: 1.3em;
 }
 </style>

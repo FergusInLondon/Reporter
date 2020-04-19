@@ -2,7 +2,7 @@ function page (path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
 }
 
-export default [
+const appRoutes = [
   { path: '/', redirect: { name: 'login' }},
 
   { path: '/login', name: 'login', component: page('auth/login.vue') },
@@ -13,38 +13,31 @@ export default [
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
   { path: '/home', name: 'home', component: page('home.vue') },
+];
 
-  { path: '/docs',
-    component: page('docs/index.vue'),
-    children: [
-      { path: '', redirect: { name: 'docs.listing' } },
-      { path: 'all', name: 'docs.listing', component: page('docs/listing.vue') },
-      { path: 'edit/:id', name: 'docs.edit', component: page('docs/edit.vue') },
-      { path: 'new', name: 'docs.create', component: page('docs/create.vue') }
-    ] },
+const docRoutes = [
+  { path: '/docs', name: 'docs.index', component: page('docs/index.vue') },
+  { path: '/docs/edit/:id', name: 'docs.edit', component: page('docs/edit.vue') },
+  { path: '/docs/new', name: 'docs.create', component: page('docs/create.vue') }
+];
 
-  { path: '/clients',
-    component: page('clients/index.vue'),
-    children: [
-      { path: '', redirect: { name: 'clients.listing' } },
-      { path: 'all', name: 'clients.listing', component: page('clients/listing.vue') },
-      { path: 'edit/:id', name: 'clients.edit', component: page('clients/edit.vue') },
-      { path: 'new', name: 'clients.create', component: page('clients/create.vue') }
-    ] },
+const clientRoutes = [
+  { path: '/clients/', name: 'clients.index', component: page('clients/index.vue') },
+  { path: '/clients/:id', name: 'clients.edit', component: page('clients/edit.vue') },
+  { path: '/clients/new', name: 'clients.create', component: page('clients/create.vue') }
+];
 
-  { path: '/payments',
-    component: page('payments/index.vue'),
-    children: [
-      { path: '', redirect: { name: 'payments.listing' } },
-      { path: 'all', name: 'payments.listing', component: page('payments/listing.vue') },
-    ] },
+const paymentRoutes = [
+  { path: '/payments', name: 'payments.index', component: page('payments/index.vue') },
+  { path: '/payments/:id', name: 'payments.view', component: page('payments/view.vue') },
+];
 
-  { path: '/settings',
-    component: page('settings/index.vue'),
-    children: [
-      { path: '', redirect: { name: 'settings.profile' } },
-      { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue') }
-    ] },
+const settingRoutes = [
+  { path: '/settings', redirect: { name: 'settings.account' }},
+  { path: '/settings/account', name: 'settings.account', component: page('settings/account.vue') }
+];
 
-    { path: '*', component: page('errors/404.vue') }
-]
+export default appRoutes.concat(
+  docRoutes, clientRoutes, paymentRoutes, settingRoutes,
+  [{ path: '*', component: page('errors/404.vue') }]
+);

@@ -1,5 +1,12 @@
 
 <template>
+  <div>
+    <el-steps :active="4" align-center>
+      <el-step title="Step 1" description="Select recipient client." icon="el-icon-user"></el-step>
+      <el-step title="Step 2" description="Upload document." icon="el-icon-upload"></el-step>
+      <el-step title="Step 3" description="Create payment terms." icon="el-icon-bank-card"></el-step>
+      <el-step title="Summary" description="" icon="el-icon-circle-check"></el-step>
+    </el-steps>
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <alert-success :form="form" message="Document Saved!" />
 
@@ -25,6 +32,7 @@
         </div>
       </div>
     </form>
+  </div>
 </template>
 
 <script>
@@ -32,6 +40,10 @@
   import Form from 'vform'
 
   export default {
+    created() {
+      this.$store.dispatch('app/updateTitle', 'New Document')
+    },
+
     data: () => ({
       form: new Form({
         name: '',

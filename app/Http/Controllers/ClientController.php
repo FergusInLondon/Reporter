@@ -18,7 +18,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        return $this->clientRepository->getAllForUser($request->user());
+        return $this->clientRepository->getAllForCurrentUser();
     }
 
     /**
@@ -38,9 +38,9 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show(string $clientId)
     {
-        //
+        return json_encode($this->clientRepository->get($clientId));
     }
 
     /**
