@@ -16,7 +16,7 @@
           <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="login">Login</el-button>
+          <el-button class="btn-flright" type="primary" @click="login" :disabled="!canSubmit">Login</el-button>
         </el-form-item>
         </el-form>
       </el-card>

@@ -27,8 +27,10 @@ class EloquentRepository implements RepositoryInterface {
             )->where('documents.user_id', '=', $this->currentUser->id);
     }
 
-    public function getForCurrentUser(SearchQuery $query) {
-        return $this->baseQuery()->get();
+    public function getForCurrentUser(SearchQuery $filters) {
+        $searchQuery = $this->baseQuery();
+        $filters($searchQuery);
+        return $searchQuery->get();
     }
 
     public function get(string $id) {

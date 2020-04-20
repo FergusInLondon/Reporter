@@ -80,11 +80,11 @@
       },
       async submitQuery() {
         this.$store.dispatch('app/setLoading', true);
-        const docs = await axios.get(`/api/documents`, {
+        const paymentResponse = await axios.get(`/api/payments`, {
           params: this.queryFilters
         })
-        if (docs.data) {
-          this.documents = docs.data;
+        if (paymentResponse.data) {
+          this.payments = paymentResponse.data;
           this.$store.dispatch('app/setLoading', false);
         }
       }

@@ -27,6 +27,13 @@ class EloquentRepository implements RepositoryInterface {
             ->whereNull('clients.deleted_at');
     }
 
+    public function getAutocompleteSuggestions() {
+        return DB::table('clients')
+            ->select('id', 'name')
+            ->where('user_id', '=', $this->currentUser->id)
+            ->get();
+    }
+
     public function get(string $clientId) {
         return $this->baseQuery()->where(
             'clients.id', '=', $clientId

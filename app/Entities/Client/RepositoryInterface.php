@@ -7,4 +7,5 @@ interface RepositoryInterface {
     public function get(string $clientId);
     public function getAllForCurrentUser();
     public function getForDocument(string $documentId);
+    public function getAutocompleteSuggestions();
 }

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Entities\Payment\Payment;
+use App\Entities\Payment\SearchQuery;
 use App\Entities\Payment\RepositoryInterface as PaymentRepository;
 use Illuminate\Http\Request;
 
