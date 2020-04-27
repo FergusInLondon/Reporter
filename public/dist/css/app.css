@@ -5411,7 +5411,7 @@ var paymentCreation = 2;
 var documentSummary = 4;
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
-    this.$store.dispatch('app/updateTitle', 'New Document');
+    this.$store.dispatch('app/updateTitle', 'Create New Document');
   },
   computed: {
     showClientSelection: function showClientSelection() {
@@ -5436,8 +5436,7 @@ var documentSummary = 4;
       documentModel: {},
       paymentModel: {},
       canSubmit: true,
-      active: clientSelection,
-      clientId: ""
+      active: clientSelection
     };
   },
   methods: {

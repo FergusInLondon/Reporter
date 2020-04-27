@@ -5,7 +5,7 @@
   active-text-color="#ffd04b"  :router="true">
       <template v-if="user">
         <el-menu-item id="toggleSidenav" @click="toggleSideNav">
-          <i id="sidebar-toggle" :class="[ sidebarCollapsed ? 'el-icon-open' : 'el-icon-turn-off']"></i>
+          <i id="sidebar-toggle" :class="[ sidebarCollapsed ? 'el-icon-open' : 'el-icon-turn-off' ]"></i>
         </el-menu-item>
         <el-menu-item @click="logout">Logout</el-menu-item>
       </template>

@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::apiResource('documents', 'DocumentController');
     Route::apiResource('payments', 'PaymentController');
+
+    Route::get('/clients/autocomplete', 'ClientController@autocomplete');
     Route::apiResource('clients', 'ClientController');
 });
 

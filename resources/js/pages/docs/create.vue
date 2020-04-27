@@ -39,7 +39,7 @@
 
   export default {
     created() {
-      this.$store.dispatch('app/updateTitle', 'New Document')
+      this.$store.dispatch('app/updateTitle', 'Create New Document')
     },
 
     computed: {
@@ -65,8 +65,7 @@
       documentModel: {},
       paymentModel: {},
       canSubmit: true,
-      active: clientSelection,
-      clientId: ""
+      active: clientSelection
     }),
 
     methods: {
